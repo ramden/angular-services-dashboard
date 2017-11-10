@@ -1,0 +1,21 @@
+version: '2'
+services:
+  image:
+    build:
+      context: .
+      dockerfile: Dockerfile
+  build:
+    image: 'angularservicesdashboard_image'
+    depends_on:
+      - image
+    command: bash -c "mkdir -p dist/ && mkdir -p deploy/ && npm run build && ls && cp -rv dist/* deploy"
+    volumes:
+      - ./dist:/usr/src/app/deploy
+  lint:
+    image: 'angularservicesdashboard_image'
+    depends_on:
+      - image
+    command: |
+      bash -c "mkdir -p build/reports/lint && node node_modules/tslint/bin/tslint  -c tslint.json 'src/**/*.ts' -e 'src/app/shared/swagger/**/*.ts' --format checkstyle -o ./build/reports/lint/checkstyle.xml"
+    volumes:
+      - ./build:/usr/src/app/build
