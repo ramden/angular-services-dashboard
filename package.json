@@ -9,8 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "surge": "npm run build && ./node_modules/.bin/surge --project ./dist --domain angular-services-dashboard-dev.surge.sh",
-    "surge:prod": "npm run build && ./node_modules/.bin/surge --project ./dist --domain angular-services-dashboard.surge.sh"
+    "surge": "./node_modules/.bin/surge --project ./dist --domain angular-services-dashboard-dev.surge.sh",
+    "surge:prod": "./node_modules/.bin/surge --project ./dist --domain angular-services-dashboard.surge.sh"
   },
   "private": true,
   "dependencies": {
