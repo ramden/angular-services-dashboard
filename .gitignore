@@ -43,4 +43,4 @@ Thumbs.db
 /yarn.lock
 
 /build
-/dist
+package-lock.json
