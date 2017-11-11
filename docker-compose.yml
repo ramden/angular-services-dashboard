@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
   build:
     image: 'angularservicesdashboard_image'
+    container_name: angularservicesdashboard_build
     depends_on:
       - image
     command: bash -c "mkdir -p dist/ && mkdir -p deploy/ && npm run build && ls && cp -rv dist/* deploy"
@@ -13,6 +14,7 @@ services:
       - ./dist:/usr/src/app/deploy
   lint:
     image: 'angularservicesdashboard_image'
+    container_name: angularservicesdashboard_lint
     depends_on:
       - image
     command: |
