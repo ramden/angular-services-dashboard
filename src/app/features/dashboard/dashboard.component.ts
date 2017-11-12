@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   pingItemsFavorite$: Observable<Array<AsdUrlPingStatusItem>>;
   pingItemsOnline$: Observable<Array<AsdUrlPingStatusItem>>;
   pingItemsOffline$: Observable<Array<AsdUrlPingStatusItem>>;
+  pingItemsPending$: Observable<Array<AsdUrlPingStatusItem>>;
 
   constructor(private pingService: PingService) {
     this.pingItems$ = pingService.pingStatusItems$;
@@ -40,6 +41,14 @@ export class DashboardComponent implements OnInit {
     this.pingItemsOffline$ = pingService.pingStatusItems$.pipe(
       mergeMap(array => from(array).pipe(
         filter(item => item.currentStatus === AsdPingStatus.offline),
+        toArray(),
+        share()
+      ))
+    );
+
+    this.pingItemsPending$ = pingService.pingStatusItems$.pipe(
+      mergeMap(array => from(array).pipe(
+        filter(item => item.currentStatus === AsdPingStatus.pending),
         toArray(),
         share()
       ))

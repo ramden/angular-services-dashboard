@@ -19,6 +19,12 @@
                       [title_icon_color]="'red'"
                       [pingItems]="pingItemsOffline$ | async"
     ></asd-section-grid>
+    <asd-section-grid *ngIf="(pingItemsPending$ | async).length > 0"
+                      [title]="'Pending'"
+                      [title_icon]="''"
+                      [title_icon_color]="'grey'"
+                      [pingItems]="pingItemsPending$ | async"
+    ></asd-section-grid>
   </div>
   <div *ngIf="(pingItems$ | async).length <= 0" class="container-fluid">
     <div class="jumbotron">
@@ -26,7 +32,7 @@
       <hr class="my-4">
       <p>To get started please add your first URL</p>
       <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Add New URL</a>
+        <asd-add-edit-form></asd-add-edit-form>
       </p>
     </div>
   </div>

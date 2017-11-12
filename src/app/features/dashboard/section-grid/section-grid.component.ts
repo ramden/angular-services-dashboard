@@ -18,7 +18,7 @@ export class SectionGridComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.pingItems);
+    // console.log(this.pingItems);
   }
 
 }

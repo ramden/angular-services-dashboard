@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {ConfigurationService} from './configuration.service';
 import {AsdPingStatus, AsdUrlPingItem, AsdUrlPingStatusItem} from './AsdTypes';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
@@ -9,64 +9,59 @@ import {interval} from 'rxjs/observable/interval';
 import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {of} from 'rxjs/observable/of';
 import {Http, Jsonp, RequestOptionsArgs} from '@angular/http';
+import {PingSocketService} from './ping-socket.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Injectable()
-export class PingService {
+export class PingService implements OnDestroy {
+  private socketConnection: Subscription;
 
   private pingItemsSubject: BehaviorSubject<Array<AsdUrlPingStatusItem>> = new BehaviorSubject([]);
 
   pingStatusItems$: Observable<Array<AsdUrlPingStatusItem>> = this.pingItemsSubject.asObservable();
+  private pingStatusItems: Array<AsdUrlPingStatusItem>;
 
   constructor(private configurationService: ConfigurationService,
-              private http: HttpClient) {
-    configurationService.pingConfigItemsList$.subscribe(result => {
-      if (result) {
-        this.pingItemsSubject.next(result.map(item => {
+              private pingSocketService: PingSocketService) {
+
+    configurationService.pingConfigItemsList$.subscribe(configItemsList => {
+      if (configItemsList) {
+        this.pingStatusItems = configItemsList.map(item => {
           return {
             pingItem: item,
-            currentStatus: AsdPingStatus.offline
+            currentStatus: AsdPingStatus.pending
           };
-        }));
+        });
 
-        this.startPingProcess(result);
+        // Send initial array of items
+        this.notifyObservers();
+
+        this.startPingProcess(configItemsList);
       }
     });
   }
 
   private startPingProcess(pingItems: Array<AsdUrlPingItem>) {
 
-    const sourceObservable: Array<Observable<AsdUrlPingStatusItem>> = [];
+    console.log('1');
+    console.log(pingItems);
+    this.pingSocketService.startPingForItems(pingItems);
 
-    for (const pingItem of pingItems) {
-      const obs: Observable<AsdUrlPingStatusItem> = interval(pingItem.pingIntervalSeconds * 1000).pipe(
-        switchMap((value) => of(value)),
-        mergeMap(() => {
-          return this.http.get(pingItem.url);
-        }),
-        tap(console.log),
-        catchError((err: Response) => {
-          console.log(err);
-          return Observable.throw(err);
-        }),
-        tap(console.log),
-        /*
-        map(result => {
-          return {
-            pingItem: pingItem,
-            currentStatus: AsdPingStatus.offline
-          };
-        })
-        */
-      );
+    this.socketConnection = this.pingSocketService.getPingMessages().subscribe(pingMessage => {
+      const foundItem = this.pingStatusItems.find(item => item.pingItem.url === pingMessage.url);
 
-      sourceObservable.push(obs);
-
-    }
-
-    from(sourceObservable).pipe(
-      mergeAll()
-    ).subscribe(result => {
-      console.log(result);
+      if (foundItem) {
+        foundItem.currentStatus = pingMessage.available ? AsdPingStatus.online : AsdPingStatus.offline;
+        this.notifyObservers();
+      }
     });
+  }
+
+  ngOnDestroy() {
+    this.socketConnection.unsubscribe();
+  }
+
+  private notifyObservers() {
+    this.pingItemsSubject.next(Object.assign([], this.pingStatusItems));
   }
 }

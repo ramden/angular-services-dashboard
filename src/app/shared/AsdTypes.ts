@@ -1,5 +1,5 @@
 export enum AsdPingStatus {
-  online, offline
+  online, offline, pending
 }
 
 export interface AsdUrlPingStatusItem {
@@ -11,10 +11,14 @@ export interface AsdUrlPingItem {
   url: string;
   title: string;
   description: string;
-  pingIntervalSeconds: number;
   isFavorite: boolean;
 }
 
 export interface AsdAppConfiguration {
   pingItems: Array<AsdUrlPingItem>;
+}
+
+export interface AsdSocketResponse {
+  url: string;
+  available: boolean;
 }

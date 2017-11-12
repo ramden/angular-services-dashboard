@@ -1,0 +1,18 @@
+{
+  "name": "pingserver",
+  "version": "1.0.0",
+  "description": "Pingserver for services dashboard monitor",
+  "main": "index.js",
+  "author": "Denis Ramic",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "http-observable": "^0.1.0",
+    "rxjs": "^5.5.2",
+    "socket.io": "^2.0.4"
+  }
+}

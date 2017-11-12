@@ -3,21 +3,26 @@ import { CommonModule } from '@angular/common';
 import {ConfigurationService} from './configuration.service';
 import {PingService} from './ping.service';
 import {ConfigurationPersistorService} from './configuration-persistor.service';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, } from '@angular/common/http';
-import {TimingInterceptor} from './TimingInterceptor';
-import {JsonpModule} from '@angular/http';
+import {HttpClientModule, } from '@angular/common/http';
+import {PingSocketService} from './ping-socket.service';
+import {AddEditFormComponent} from './add-edit-form/add-edit-form.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    HttpClientModule,
-    JsonpModule
+    HttpClientModule
   ],
-  declarations: [],
+  declarations: [
+    AddEditFormComponent
+  ],
   providers: [
     ConfigurationService,
     ConfigurationPersistorService,
-    PingService
+    PingService,
+    PingSocketService
+  ],
+  exports: [
+    AddEditFormComponent
   ]
 })
 export class SharedModule { }
