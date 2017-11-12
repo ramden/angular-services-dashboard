@@ -1,0 +1,11 @@
+.ping-item {
+  margin-bottom: 15px;
+
+  &.online {
+    border-top: 5px solid green;
+  }
+
+  &.offline {
+    border-top: 5px solid grey;
+  }
+}

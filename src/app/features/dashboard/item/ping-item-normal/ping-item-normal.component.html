@@ -1,0 +1,9 @@
+<div class="card ping-item" [ngClass]="{'online': status === statusCompare.online, 'offline': status === statusCompare.offline}">
+  <div class="card-body">
+    <h6 class="card-title">{{pingItem.title}}</h6>
+    <p class="card-text">{{pingItem.description}}</p>
+    <small>
+      <a href="{{pingItem.url}}" target="_blank">{{pingItem.url}}</a> | Ping interval: <strong>{{pingItem.pingIntervalSeconds}}s</strong>
+    </small>
+  </div>
+</div>

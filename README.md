@@ -1,14 +1,12 @@
-# AngularServicesDashboard
+# Angular Services Dashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
+Display a grid / list of urls with online status, custom ping intervals and webhooks
+
+Demo: http://angular-services-dashboard-dev.surge.sh/
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
@@ -21,6 +19,10 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Docker and docker-compose
+
+Run `docker-compose up build` to build the production version of the app with docker
 
 ## Further help
 
