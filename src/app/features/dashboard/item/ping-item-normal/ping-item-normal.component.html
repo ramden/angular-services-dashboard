@@ -1,12 +1,9 @@
-<div class="card ping-item">
+<div class="card ping-item" [ngClass]="{'online': status === statusCompare.online, 'offline': status === statusCompare.offline}">
   <div class="card-body">
-    <h6 class="card-title">Card title</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-      content.</p>
-    <div class="actionwrap">
-      <div class="right text-right">
-        <a href="#" class="btn btn-light">Open URL</a>
-      </div>
-    </div>
+    <h6 class="card-title">{{pingItem.title}}</h6>
+    <p class="card-text">{{pingItem.description}}</p>
+    <small>
+      <a href="{{pingItem.url}}" target="_blank">{{pingItem.url}}</a> | Ping interval: <strong>{{pingItem.pingIntervalSeconds}}s</strong>
+    </small>
   </div>
 </div>

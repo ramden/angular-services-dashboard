@@ -3,7 +3,7 @@
     <h5><i class="fa fa-{{title_icon}}" [ngStyle]="{'color': title_icon_color || 'black'}"></i> {{title}}</h5>
   </div>
 
-  <div *ngFor="let i of [1, 2, 3,4,5,6,7]" class="col-lg-3 col-md-4 col-sm-6">
-    <asd-ping-item-normal></asd-ping-item-normal>
+  <div *ngFor="let pingItem of pingItems" class="col-lg-3 col-md-4 col-sm-6">
+    <asd-ping-item-normal [pingItem]="pingItem.pingItem" [status]="pingItem.currentStatus"></asd-ping-item-normal>
   </div>
 </div>
