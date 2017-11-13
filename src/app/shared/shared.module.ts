@@ -5,15 +5,17 @@ import {PingService} from './ping.service';
 import {ConfigurationPersistorService} from './configuration-persistor.service';
 import {HttpClientModule, } from '@angular/common/http';
 import {PingSocketService} from './ping-socket.service';
-import {AddEditFormComponent} from './add-edit-form/add-edit-form.component';
+import {AddEditURLFormComponent} from './add-edit-url-form/add-edit-url-form.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   declarations: [
-    AddEditFormComponent
+    AddEditURLFormComponent
   ],
   providers: [
     ConfigurationService,
@@ -22,7 +24,7 @@ import {AddEditFormComponent} from './add-edit-form/add-edit-form.component';
     PingSocketService
   ],
   exports: [
-    AddEditFormComponent
+    AddEditURLFormComponent
   ]
 })
 export class SharedModule { }

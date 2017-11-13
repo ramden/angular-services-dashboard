@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {PingService} from '../../shared/ping.service';
 import {Observable} from 'rxjs/Observable';
-import {AsdPingStatus, AsdUrlPingStatusItem} from '../../shared/AsdTypes';
+import {AsdPingStatus, AsdUrlPingItem} from '../../shared/AsdTypes';
 import {filter, mergeMap, share, tap, toArray} from 'rxjs/operators';
 import {from} from 'rxjs/observable/from';
 
@@ -13,18 +13,18 @@ import {from} from 'rxjs/observable/from';
 })
 export class DashboardComponent implements OnInit {
 
-  pingItems$: Observable<Array<AsdUrlPingStatusItem>>;
-  pingItemsFavorite$: Observable<Array<AsdUrlPingStatusItem>>;
-  pingItemsOnline$: Observable<Array<AsdUrlPingStatusItem>>;
-  pingItemsOffline$: Observable<Array<AsdUrlPingStatusItem>>;
-  pingItemsPending$: Observable<Array<AsdUrlPingStatusItem>>;
+  pingItems$: Observable<Array<AsdUrlPingItem>>;
+  pingItemsFavorite$: Observable<Array<AsdUrlPingItem>>;
+  pingItemsOnline$: Observable<Array<AsdUrlPingItem>>;
+  pingItemsOffline$: Observable<Array<AsdUrlPingItem>>;
+  pingItemsPending$: Observable<Array<AsdUrlPingItem>>;
 
   constructor(private pingService: PingService) {
     this.pingItems$ = pingService.pingStatusItems$;
 
     this.pingItemsFavorite$ = pingService.pingStatusItems$.pipe(
       mergeMap(array => from(array).pipe(
-        filter(item => item.pingItem.isFavorite === true),
+        filter(item => item.isFavorite === true),
         toArray(),
         share()
       ))

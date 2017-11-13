@@ -1,9 +1,23 @@
-<div class="card ping-item" [ngClass]="{'online': status === statusCompare.online, 'offline': status === statusCompare.offline}">
+<div class="card ping-item mb-3 " [ngClass]="{
+'bg-success': pingItem.currentStatus === statusCompare.online,
+'text-white': pingItem.currentStatus === statusCompare.online || pingItem.currentStatus === statusCompare.offline,
+'bg-danger': pingItem.currentStatus === statusCompare.offline,
+'bg-secondary': pingItem.currentStatus === statusCompare.pending
+}">
   <div class="card-body">
+    <div class="col text-right toggleButton">
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-sm btn-outline-light" id="dropdownBasic1" ngbDropdownToggle></button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button class="dropdown-item"><i class="fa fa-pencil"></i> Edit</button>
+          <button class="dropdown-item text-danger" (click)="delete()"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+      </div>
+    </div>
     <h6 class="card-title">{{pingItem.title}}</h6>
     <p class="card-text">{{pingItem.description}}</p>
-    <small>
-      <a href="{{pingItem.url}}" target="_blank">{{pingItem.url}}</a>
+    <small >
+      <a class="text-white" href="{{pingItem.url}}" target="_blank">{{pingItem.url}}</a>
     </small>
   </div>
 </div>

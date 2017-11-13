@@ -8,10 +8,27 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 export class ConfigurationService {
 
   private pingConfigItemsSubject: BehaviorSubject<Array<AsdUrlPingItem>> = new BehaviorSubject([]);
-
   pingConfigItemsList$: Observable<Array<AsdUrlPingItem>> = this.pingConfigItemsSubject.asObservable();
 
   constructor(private configurationPersistorService: ConfigurationPersistorService) {
-    this.pingConfigItemsSubject.next( configurationPersistorService.getAllPingItems());
+    this.configurationPersistorService.pingConfigItemsList$.subscribe(configArray => {
+      this.pingConfigItemsSubject.next(configArray);
+    });
+  }
+
+  addNewPingItem(pingItem: AsdUrlPingItem) {
+    this.configurationPersistorService.addNewPingItem(pingItem);
+  }
+
+  editPingItem(pingItem: AsdUrlPingItem) {
+    this.configurationPersistorService.editPingItem(pingItem);
+  }
+
+  deletePingItem(pingItem: AsdUrlPingItem) {
+    this.configurationPersistorService.deletePingItem(pingItem);
+  }
+
+  editPingItemLocally(pingItem: AsdUrlPingItem) {
+    this.configurationPersistorService.editPingItemLocally(pingItem);
   }
 }

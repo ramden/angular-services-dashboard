@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {AsdUrlPingStatusItem} from '../../../shared/AsdTypes';
+import {AsdUrlPingItem} from '../../../shared/AsdTypes';
 
 @Component({
   selector: 'asd-section-grid',
@@ -13,7 +13,7 @@ export class SectionGridComponent implements OnInit {
   @Input() title_icon: string;
   @Input() title_icon_color: string;
   @Input() background: string;
-  @Input() pingItems: Array<AsdUrlPingStatusItem>;
+  @Input() pingItems: Array<AsdUrlPingItem>;
 
   constructor() { }
 

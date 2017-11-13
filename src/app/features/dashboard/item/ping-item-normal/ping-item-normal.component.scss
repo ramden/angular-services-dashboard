@@ -1,11 +1,5 @@
-.ping-item {
-  margin-bottom: 15px;
-
-  &.online {
-    border-top: 5px solid green;
-  }
-
-  &.offline {
-    border-top: 5px solid red;
-  }
+.toggleButton {
+  position: absolute;
+  top: 10px;
+  right: 0px;
 }
